@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+</head>
+<body style="font-family:Arial;width:600px;padding:0 0 20px 0;border: 4px solid black;">
+    <center>     
+    <h1 style="font-family:Arial">To Do</h1>
+    <div id="cta"
+        style="display:inline-block;
+        width: fit-content;
+        background: linear-gradient(to right, #000,#3b3b3b);
+        color: white;
+        padding: 0.6em 0.6em 0.6em 1em;
+        border-radius: 2em;
+        display:flex;
+        font-family: Arial;
+        ">
+        <p style="display:inline;vertical-align:middle;padding:0;margin:auto 0;">Add Task</Strong></p>
+        <img src="http://cdn.mcauto-images-production.sendgrid.net/7c83a91e7c423767/65ddd7e8-9a49-4da9-8e0b-9c32f6ddcd5e/70x70.png" style="width:100%;max-width:2em;margin-left:20px;
+                                                        vertical-align: middle;"/>
+        </div>
+        </center>
+    <script>
+        let cta = document.getElementById('cta');
+        cta.addEventListener('click', () => {
+            let store_box = document.createElement('div');
+            document.body.appendChild(store_box);
+            let new_Task = document.createElement('input');
+            new_Task.style.marginRight = "20px";
+            new_Task.style.marginLeft = "20px";
+            new_Task.style.fontSize = "1.4em";
+            document.body.appendChild(new_Task);
+            let done_cta = document.createElement('p');
+            done_cta.textContent = "Done";
+            done_cta.style.backgroundColor = "black";
+            done_cta.style.padding = "4px 10px";
+            done_cta.style.fontSize = "1.4em";
+            done_cta.style.color = "white";
+            done_cta.style.display = "inline-block";
+            done_cta.style.borderRadius = "4px";
+            document.body.appendChild(done_cta);
+
+            function addTask() {
+                if (new_Task.value.trim() !== "") {
+                    let taskItem = document.createElement('p');
+                    taskItem.style.fontSize = "1.4em";
+                    taskItem.textContent = new_Task.value;
+                    store_box.appendChild(taskItem);
+                    store_box.style.marginLeft = "20px";
+
+                    let del_cta = document.createElement('p');
+                    del_cta.textContent = "Delete";
+                    del_cta.style.backgroundColor = "black";
+                    del_cta.style.padding = "4px 10px";
+                    del_cta.style.fontSize = "1.4em";
+                    del_cta.style.color = "white";
+                    del_cta.style.display = "inline-block";
+                    del_cta.style.borderRadius = "4px";
+                    store_box.appendChild(del_cta);
+
+                    del_cta.addEventListener('click', () => {
+                        taskItem.remove();
+                        del_cta.remove();
+                        edit_cta.remove();
+                        complete_cta.remove();
+                    });
+
+                    let edit_cta = document.createElement('p');
+                    edit_cta.textContent = "Edit";
+                    edit_cta.style.backgroundColor = "black";
+                    edit_cta.style.marginLeft = "8px";
+                    edit_cta.style.padding = "4px 10px";
+                    edit_cta.style.fontSize = "1.4em";
+                    edit_cta.style.color = "white";
+                    edit_cta.style.display = "inline-block";
+                    edit_cta.style.borderRadius = "4px";
+                    store_box.appendChild(edit_cta);
+
+                    edit_cta.addEventListener('click', () => {
+                        new_Task.value = taskItem.textContent;
+                        done_cta.textContent = "Update";
+                        done_cta.onclick = () => {
+                            taskItem.textContent = new_Task.value;
+                            new_Task.value = "";
+                            done_cta.textContent = "Done";
+                            done_cta.onclick = addTask;  // Revert back to add task functionality
+                        };
+                    });
+
+                    let complete_cta = document.createElement('p');
+                    complete_cta.textContent = "Complete";
+                    complete_cta.style.backgroundColor = "green";
+                    complete_cta.style.marginLeft = "8px";
+                    complete_cta.style.padding = "4px 10px";
+                    complete_cta.style.fontSize = "1.4em";
+                    complete_cta.style.color = "white";
+                    complete_cta.style.display = "inline-block";
+                    complete_cta.style.borderRadius = "4px";
+                    complete_cta.style.cursor = "Pointer";
+                    store_box.appendChild(complete_cta);
+
+                    complete_cta.addEventListener('click', () => {
+                        taskItem.style.textDecoration = "line-through";
+                    });
+
+                    new_Task.value = "";
+                }
+            }
+
+            done_cta.onclick = addTask;
+        });
+    </script>
+</body>
+</html>
